@@ -1,0 +1,32 @@
+Package: CPIAggr
+Title: CPI Custom Aggregate Calculator
+Version: 1.0.0.1
+Authors@R: 
+    person("Gerry", "O\'Donnell", email = "gerry.odonnell@statcan.gc.ca", role = c("aut", "cre"))
+Description: An R Shiny app which opens a browser to allow users to select published CPI products and geographies and calculate Custom CPIs as aggregates of selected series or as All-items excluding the selections.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Depends: 
+    R (>= 3.5)
+Imports: 
+    archive,
+	dplyr,
+    httr,
+    jsonlite,
+    lubridate,
+    plotly,
+    purrr,
+    reactable,
+	readr,
+    readxl,
+    scales,
+    shiny,
+    shinyBS,
+    shinydashboard,
+    shinyjs,
+    shinyWidgets,
+    sqldf,
+    tidyr,
+    waiter
