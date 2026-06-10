@@ -25,6 +25,12 @@ Once installed, you can run it using the following R code:
 - Consumer Prices Division / Division des prix à la consommation
 - Statistics Canada / Statistique Canada
 - gerry.odonnell@statcan.gc.ca
+- Thanks also to 
+    - Zack Lansfield, Vishal Sood for help with packaging and accessibility
+	- Clément Yélou for help with formulae and translation
+	- Chris Bazos for help with testing
+	- Zack Glazier, Lance Taylor for code reviews
+	- many others for input on design
 
 ## How it works:
 
