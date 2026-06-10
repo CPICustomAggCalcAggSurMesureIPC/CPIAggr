@@ -1417,21 +1417,8 @@ fMessage <- function(fvcBlock, fvcMessage) {
 #---------------------------------
 
 
-# get English and French text
-dfTextEnFr <- as.data.frame(readxl::read_xlsx("data-raw/Data_for_R_Shiny.xlsx", sheet="En & Fr text"))
-
-
-# get basket periods
-dfBasket   <- as.data.frame(readxl::read_xlsx("data-raw/Data_for_R_Shiny.xlsx", sheet="basket")) |>
-	 mutate(basket_ref_date         = weight_reference_period,
-	        weight_reference_period = paste0(as.character(weight_reference_period),"-01-01"),
-         link_period             = as.character(link_period),
-         first_period            = as.character(first_period),
-         last_period             = as.character(last_period) )
-
-
 # get series
-dfSeriesReg <- as.data.frame(readxl::read_xlsx("data-raw/Data_for_R_Shiny.xlsx", sheet="map vectors across tables")) |>
+dfSeriesReg <- dfSeriesReg |>
   mutate(table_18100004_vector         = as.integer(substr(i_vector,              2, nchar(i_vector))),
          table_18100007_samegeo_vector = as.integer(substr(w_link_samegeo_vector, 2, nchar(w_link_samegeo_vector))),
          table_18100007_Canada_vector  = as.integer(substr(w_link_Canada_vector,  2, nchar(w_link_Canada_vector))),
@@ -1470,19 +1457,13 @@ dfSeriesSpagg <- dfSeriesReg |>
 
 
 # get popular aggregates
-dfPopularAggDefn <- as.data.frame(readxl::read_xlsx("data-raw/Data_for_R_Shiny.xlsx", sheet="popular aggregate defn")) |>
-	 filter(display == "y") |>
+dfPopularAggDefn <- dfPopularAggDefn |>
   mutate(language            = cAppLanguage,
   			    aggregate_geography = ifelse(language == "English", aggregate_geography_en, aggregate_geography_fr),
   			    aggregate_product   = ifelse(language == "English", aggregate_product_en,   aggregate_product_fr),
          indented_geography  = paste0(strrep(intToUtf8(160), indent_geo  * 2), aggregate_geography),
          indented_product    = paste0(strrep(intToUtf8(160), indent_prod * 2), aggregate_product)) |>
   arrange(aggregate_sort_position)
-
-
-# get popular aggregate components
-dfPopularAggComp <- as.data.frame(readxl::read_xlsx("data-raw/Data_for_R_Shiny.xlsx", sheet="popular aggregate components")) |>
-	 select(aggregate_id, where_to_code, i_dim2_position)
 
 
 # set graph colours and linetypes
