@@ -1417,8 +1417,21 @@ fMessage <- function(fvcBlock, fvcMessage) {
 #---------------------------------
 
 
+# get English and French text
+dfTextEnFr <- as.data.frame(readxl::read_xlsx("data-raw/Data_for_R_Shiny.xlsx", sheet="En & Fr text"))
+
+
+# get basket periods
+dfBasket   <- as.data.frame(readxl::read_xlsx("data-raw/Data_for_R_Shiny.xlsx", sheet="basket")) |>
+	 mutate(basket_ref_date         = weight_reference_period,
+	        weight_reference_period = paste0(as.character(weight_reference_period),"-01-01"),
+         link_period             = as.character(link_period),
+         first_period            = as.character(first_period),
+         last_period             = as.character(last_period) )
+
+
 # get series
-dfSeriesReg <- dfSeriesReg |>
+dfSeriesReg <- as.data.frame(readxl::read_xlsx("data-raw/Data_for_R_Shiny.xlsx", sheet="map vectors across tables")) |>
   mutate(table_18100004_vector         = as.integer(substr(i_vector,              2, nchar(i_vector))),
          table_18100007_samegeo_vector = as.integer(substr(w_link_samegeo_vector, 2, nchar(w_link_samegeo_vector))),
          table_18100007_Canada_vector  = as.integer(substr(w_link_Canada_vector,  2, nchar(w_link_Canada_vector))),
@@ -1457,13 +1470,19 @@ dfSeriesSpagg <- dfSeriesReg |>
 
 
 # get popular aggregates
-dfPopularAggDefn <- dfPopularAggDefn |>
+dfPopularAggDefn <- as.data.frame(readxl::read_xlsx("data-raw/Data_for_R_Shiny.xlsx", sheet="popular aggregate defn")) |>
+	 filter(display == "y") |>
   mutate(language            = cAppLanguage,
   			    aggregate_geography = ifelse(language == "English", aggregate_geography_en, aggregate_geography_fr),
   			    aggregate_product   = ifelse(language == "English", aggregate_product_en,   aggregate_product_fr),
          indented_geography  = paste0(strrep(intToUtf8(160), indent_geo  * 2), aggregate_geography),
          indented_product    = paste0(strrep(intToUtf8(160), indent_prod * 2), aggregate_product)) |>
   arrange(aggregate_sort_position)
+
+
+# get popular aggregate components
+dfPopularAggComp <- as.data.frame(readxl::read_xlsx("data-raw/Data_for_R_Shiny.xlsx", sheet="popular aggregate components")) |>
+	 select(aggregate_id, where_to_code, i_dim2_position)
 
 
 # set graph colours and linetypes
@@ -1604,7 +1623,7 @@ shinydashboard::dashboardBody(
       h1                                 {font-family: 'Noto Sans' !important; font-size: 150% !important; margin: 0px 0px !important; text-align: center !important; ; border-bottom: 0px !important}
       h2                                 {font-family: 'Noto Sans' !important; font-size: 120% !important; margin: 0px 0px !important;}
       h3                                 {font-family: 'Noto Sans' !important; font-size: 100% !important; margin: 0px 0px !important;}
- 		   .content-wrapper                   {background-color: white;}
+ 	  content-wrapper                    {background-color: white;}
       .well                              {margin: 3px 3px !important; padding: 0px 10px !important; background-color: #f5f5f5;}
       .btn                               {min-width: 25px !important; width: auto !important; min-height: 25px !important; height: auto !important; margin: 0px 0px; padding: 1px 1px !important; white-space: normal; border: 1px solid #dcdee1; background-color: #eaebed !important;}
       .btnAction                         {position: absolute !important; right: 10px !important; min-width: 60px !important; width: 60px !important; min-height: 25px !important; height: auto !important; font-size: 70% !important; margin: 0px 0px; padding: 1px 1px !important; white-space: normal; border: 1px solid #dcdee1; }
@@ -1765,11 +1784,17 @@ shinydashboard::dashboardBody(
         shiny::fluidRow(shiny::column(12, div(style = "height: 10px;"))),
 
         shiny::fluidRow(
-          shiny::column(4, style = "height: 100px;                    padding-right: 2px;", div(shiny::selectInput("inSelPopularAggGeo",  label = div(HTML(fGetEnFrText("CustAggGroupGeoText")),  style = "font-size: 80%; font-weight: normal;"), width = "100%",
-            choices = c("", unique(dfPopularAggDefn$indented_geography)), selected = "", multiple = FALSE, selectize = FALSE), style = "margin-bottom: 0px; height: 100px !important;")),
-          shiny::column(6, style = "height: 100px; padding-left: 2px; padding-right: 0px;", div(shiny::selectInput("inSelPopularAggProd", label = div(HTML(fGetEnFrText("CustAggGroupProdText")), style = "font-size: 80%; font-weight: normal;"), width = "100%",
-            choices = c("", dfPopularAggDefn$indented_product),   selected = "", multiple = FALSE, selectize = FALSE), style = "margin-bottom: 0px;")),
-          shiny::column(2, style = "height: 100px;", id = "buttons", shiny::actionButton("inBtnApplyPopularAgg", label = fGetEnFrText("ApplyPopularAggButtonLabel"), class = "btnAction"))),
+          shiny::column(4, style = "                    padding-right: 2px;", 
+            div(shiny::selectInput("inSelPopularAggGeo", width = "100%",  
+                  label = div(HTML(fGetEnFrText("CustAggGroupGeoText")),  style = "font-size: 80%; font-weight: normal;"),
+                  choices = c("", unique(dfPopularAggDefn$indented_geography)), selected = "", multiple = FALSE, selectize = FALSE), 
+                  style = "margin-bottom: 0px; height: 100px !important;")),
+          shiny::column(6, style = "padding-left: 2px; padding-right: 0px;", 
+            div(shiny::selectInput("inSelPopularAggProd", width = "100%", 
+                  label = div(HTML(fGetEnFrText("CustAggGroupProdText")), style = "font-size: 80%; font-weight: normal;"),
+                  choices = c("", dfPopularAggDefn$indented_product),   selected = "", multiple = FALSE, selectize = FALSE), 
+                  style = "margin-bottom: 0px; height: 100px !important;")),
+          shiny::column(2, shiny::actionButton("inBtnApplyPopularAgg", label = fGetEnFrText("ApplyPopularAggButtonLabel"), class = "btnAction"))),
         br(),
 
         # Component series
