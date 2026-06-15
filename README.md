@@ -2,6 +2,7 @@
 # CPIAggr 
 
 *Le français suit*
+
 The CPIAggr R package launches the CPI Custom Aggregate Calculator, an interactive app which allows users of Statistics Canada data to select published CPI geographies and products and calculate Custom CPIs as aggregates of the selected series or as All-items excluding the selections. Results are displayed in graphs and tables as percentage changes, index levels, or contributions to All-items percentage change.
 
 ## Installation
