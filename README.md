@@ -10,6 +10,7 @@ The CPIAggr R package launches the CPI Custom Aggregate Calculator, an interacti
 You can install the R package CPIAggr from GitHub using the following R code: remotes::install_github("CPICustomAggCalcAggSurMesureIPC/CPIAggr")
 - Prerequisites:
     - R installed on your device
+	- R "remotes" package installed
 	- A display at least 1140 pixels wide
 	- Approximately 500MB of RAM
 
@@ -73,7 +74,8 @@ Le progiciel R CPIAggr lance le « Calculateur d’agrégats sur mesure de l’I
 Vous pouvez installer le paquet R CPIAggr à partir de GitHub à l'aide du code R suivant : remotes::install_github("CPICustomAggCalcAggSurMesureIPC/CPIAggr")
 Conditions préalables :
     - R doit être installé sur votre appareil
-    - Un écran d'au moins 1140 pixels de large
+    - Le paquet R "remotes" installé
+	- Un écran d'au moins 1140 pixels de large
     - Environ 500 Mo de mémoire vive
 	
 ## Exécution de l'application dans R
