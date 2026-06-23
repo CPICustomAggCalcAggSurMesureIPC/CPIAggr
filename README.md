@@ -15,12 +15,14 @@ You can install the R package CPIAggr from GitHub using the following R code: re
 	- Approximately 500MB of RAM
 
 ## Running the app in R
+
 Once installed, you can run it using the following R code:
 - in English: execute the code CPIAggr::CPIAggr("en"), or simply CPIAggr::CPIAggr()
 - en français: executer CPIAggr::CPIAggr("fr")
 - alternately, you can load the CPIAggr package into your R session via library("CPIAggr"), then run the code CPIAggr(), CPIAggr("en") or CPIAggr("fr") without the CPIAggr:: package specification
 
 ## Using the CPI Custom Aggregate Calculator
+
 - English instructions: https://github.com/CPICustomAggCalcAggSurMesureIPC/CPIAggr
 - Instructions en français: https://github.com/CPICustomAggCalcAggSurMesureIPC/CPIAggr
 
@@ -79,6 +81,7 @@ Conditions préalables :
     - Environ 500 Mo de mémoire vive
 	
 ## Exécution de l'application dans R
+
 Une fois installée, vous pouvez l'exécuter à l'aide du code R suivant :
 - en anglais : exécutez le code CPIAggr::CPIAggr("en"), ou simplement CPIAggr::CPIAggr()
 - en français : exécutez CPIAggr::CPIAggr("fr")
@@ -89,10 +92,12 @@ Une fois installée, vous pouvez l'exécuter à l'aide du code R suivant :
     - Environ 500 Mo de mémoire vive
 	
 ## Utilisation du Calculateur d’agrégats sur mesure de l’IPC
+
 - Instructions en français: https://github.com/CPICustomAggCalcAggSurMesureIPC/CPIAggr
 - English instructions: https://github.com/CPICustomAggCalcAggSurMesureIPC/CPIAggr
 
 ## Développement :
+
 - Gerry O'Donnell, Analyste principal des prix à la consommation, Division des prix à la consommation, Statistique Canada, gerry.odonnell@statcan.gc.ca
 - Merci également à  
     - Taylor Mitchell et son équipe pour leur aide à la diffusion
@@ -103,6 +108,7 @@ Une fois installée, vous pouvez l'exécuter à l'aide du code R suivant :
     - de nombreuses autres personnes pour leurs suggestions sur la conception
 	
 ## Fonctionnement :
+
 - Le paquet charge le fichier R\\App.R, qui contient la fonction CPIAggr <- function(fvcAppLanguage) qui...
     - Définit la langue
     - Contient plusieurs fonctions à usage interne uniquement
