@@ -1417,7 +1417,7 @@ fMessage <- function(fvcBlock, fvcMessage) {
 #---------------------------------
 
 
-#load(file = "R/sysdata.rda")
+#load(file = "sysdata.rda")
 
 # get English and French text
 #dfTextEnFr from load(file = "sysdata.rda")
